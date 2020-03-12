@@ -12,6 +12,7 @@ public class NewBank {
 		addTestData();
 	}
 	
+	//Test comment
 	private void addTestData() {
 		Customer bhagy = new Customer();
 		bhagy.addAccount(new Account("Main", 1000.0));
