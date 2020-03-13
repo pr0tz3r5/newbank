@@ -49,6 +49,7 @@ public class NewBank {
 		if(customers.containsKey(customer.getKey())) {
 			switch(requestWords[0]) {
 			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
+			case "NEWACCOUNT" : return newAccount(customer, requestWords[1]);
 			default : return "FAIL";
 			}
 		}
@@ -57,6 +58,14 @@ public class NewBank {
 	
 	private String showMyAccounts(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
+	}
+
+	/*Method to add a new account. Customer types in NEWACCOUNT followed by name of account
+	Example: NEWACCOUNT Savings. The account is created with a zero balance.
+	The customer should use MOVE to put money in the account.*/
+	private String newAccount(CustomerID customer, String accountName) {
+		customers.get(customer.getKey()).addAccount(new Account(accountName, 0.0));
+		return "SUCCESS";
 	}
 
 }
