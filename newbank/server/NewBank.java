@@ -36,8 +36,13 @@ public class NewBank {
 		}
 		return null;
 	}
-
-	// commands from the NewBank customer are processed in this method
+	/*********************************************************************************
+	 * commands from the NewBank customer are processed in this method               *
+	 *********************************************************************************
+	  Example: The customer enters a request such as NEWACCOUNT Savings.
+	  This is read into the variable request. This is then split into separate 
+	  words NEWACCOUNT and Savings and stored as Strings in the array requestWords. */
+	 
 	public synchronized String processRequest(CustomerID customer, String request) {
 		String[] requestWords = request.split(" ");
 		if(customers.containsKey(customer.getKey())) {
