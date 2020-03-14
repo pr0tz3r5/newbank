@@ -18,8 +18,11 @@ public class Account {
 		return openingBalance;
 	}
 
+	public String getName(){
+		return accountName;
+	}
+
 	public void setBalance(double amount){
 		this.openingBalance = amount;
 	}
-
 }

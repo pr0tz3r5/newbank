@@ -54,6 +54,7 @@ public class NewBank {
 			switch(requestWords[0]) {
 			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
 			case "NEWACCOUNT" : return newAccount(customer, requestWords[1]);
+			case "MOVE" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3])
 			default : return "FAIL";
 			}
 		}
@@ -70,6 +71,18 @@ public class NewBank {
 	private String newAccount(CustomerID customer, String accountName) {
 		customers.get(customer.getKey()).addAccount(new Account(accountName, 0.0));
 		return "SUCCESS";
+	}
+
+	private String moveAccount(CustomerID customer, String amount, String account1, String account2) {
+		Customer currentCustomer = customers.get(customer.getKey());
+		Account origAccount = currentCustomer.findAccount(account1);
+		Account destAccount = currentCustomer.findAccount(account2);
+		Double amountDouble = Double.parseDouble(amount);
+		if(origAccount != null && destAccount != null && currentCustomer.move(amountDouble, origAccount, destAccount)) {
+			return "SUCCESS";
+		} else {
+			return "FAIL";
+		}
 	}
 
 }
