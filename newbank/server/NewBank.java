@@ -21,8 +21,8 @@ public class NewBank {
 		Customer christina = new Customer();
 		christina.addAccount(new Account("Savings", 1500.0));
 		christina.addAccount(new Account("Main", 5000.0));
-		Account mainAccount = christina.accounts.get(1);
-		Account savingAccount = christina.accounts.get(0);
+		Account mainAccount = christina.getAccounts().get(1);
+		Account savingAccount = christina.getAccounts().get(0);
 		christina.move(100, mainAccount, savingAccount);
 		customers.put("Christina", christina);
 

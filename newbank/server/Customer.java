@@ -22,10 +22,14 @@ public class Customer {
 		accounts.add(account);
 	}
 
+	public List<Account> getAccounts() {
+		return this.accounts;
+	}
+
 	public boolean move(double amount, Account origAccount, Account destAccount) {
-		if (origAccount.balance >= amount) {
-			origAccount.updateBalance(origAccount.balance - amount);
-			destAccount.updateBalance(destAccount.balance + amount);
+		if (origAccount.getBalance() >= amount) {
+			origAccount.setBalance(origAccount.getBalance() - amount);
+			destAccount.setBalance(destAccount.getBalance() + amount);
 			return true;
 		} else {
 			return false;
