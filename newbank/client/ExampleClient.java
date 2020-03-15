@@ -22,15 +22,20 @@ public class ExampleClient extends Thread{
 		bankServerResponceThread = new Thread() {
 			private BufferedReader bankServerIn = new BufferedReader(new InputStreamReader(server.getInputStream())); 
 			public void run() {
-				try {
-					while(true) {
-						String responce = bankServerIn.readLine();
-						System.out.println(responce);
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-					return;
-				}
+				while (true) {
+				    try {
+					    String responce = bankServerIn.readLine();
+					    // Kludge to exit on failed password
+					    if ((responce == null)) {
+						    server.close();
+						    System.exit(0);
+					    }
+					    System.out.println(responce);
+				    } catch (IOException e) {
+					    e.printStackTrace();
+					    return;
+				    }
+			    }
 			}
 		};
 		bankServerResponceThread.start();

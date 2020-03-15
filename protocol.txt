@@ -17,3 +17,8 @@ Returns SUCCESS or FAIL
 PAY <Person/Company> <Ammount>
 e.g. PAY John 100
 Returns SUCCESS or FAIL
+
+PASSWD <NewPassword>
+e.g. PASSWD MyNewPass1
+Returns SUCCESS or FAIL
+(NOTE: Password MUST be alphanumeric)
