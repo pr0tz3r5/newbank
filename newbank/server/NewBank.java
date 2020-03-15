@@ -54,7 +54,7 @@ public class NewBank {
 			switch(requestWords[0]) {
 			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
 			case "NEWACCOUNT" : return newAccount(customer, requestWords[1]);
-			case "MOVE" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3])
+			case "MOVE" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);
 			default : return "FAIL";
 			}
 		}

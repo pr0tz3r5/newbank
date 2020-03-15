@@ -22,8 +22,8 @@ public class Customer {
 		accounts.add(account);
 	}
 
-	public List<Account> getAccounts() {
-		return this.accounts;
+	public ArrayList<Account> getAccounts() {
+		return accounts;
 	}
 
 	public boolean move(double amount, Account origAccount, Account destAccount) {
