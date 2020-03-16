@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Customer {
 
 	private ArrayList<Account> accounts;
+	private String passwd;
 
 	public Customer() {
 		accounts = new ArrayList<>();
@@ -16,6 +17,42 @@ public class Customer {
 			s += a.toString();
 		}
 		return s;
+	}
+
+	public void setPassword(String password) {
+		passwd = password;
+	}
+
+	public Boolean changePassword(CustomerID customer, String password) {
+		if (this.checkPasswdFormat(password)) {
+			passwd = password;
+			System.out.println("Password changed for " + customer.getKey());
+			return true;
+		} else {
+			System.out.println("Password change attempt failed for " + customer.getKey());
+		}
+		return false;
+	}
+
+	public Boolean checkPassword(String password) {
+		//Just returning true for now
+		return true;
+	}
+
+	public Boolean checkPasswdFormat(String str) {
+		Boolean isNumber = false;
+		Boolean isLetter = false;
+
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+			if (Character.isDigit(c)) {
+				isNumber = true;
+			}
+			if (Character.isLetter(c)) {
+				isLetter = true;
+			}
+		}
+		return isNumber && isLetter;
 	}
 
 	public void addAccount(Account account) {
