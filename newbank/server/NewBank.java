@@ -48,13 +48,22 @@ public class NewBank {
 	  This is read into the variable request. This is then split into separate
 	  words NEWACCOUNT and Savings and stored as Strings in the array requestWords. */
 
+	// This function is easy to get NULL and loop if input the character not in exact format and looping
 	public synchronized String processRequest(CustomerID customer, String request) {
 		String[] requestWords = request.split(" ");
 		if(customers.containsKey(customer.getKey())) {
 			switch(requestWords[0]) {
-			case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
-			case "NEWACCOUNT" : return newAccount(customer, requestWords[1]);
-			case "MOVE" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);
+				//This is the case for showing account of particular customer
+				case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
+				// This is a adding new account implemented by Jane.
+				// Input:customer name & Output: Success or Fail
+				case "NEWACCOUNT" : return newAccount(customer, requestWords[1]);
+				// This is a "move" implemented by Long Ng
+				// The Move will add amount ($) from either Main/Savings to another account
+				// Input: MOVE 300 Main Savings & Output: SUCCESS or FAIL
+				// Verified by SHOWMYACCOUNTS
+				// However, the Main and Savings must follow exactly the capital letter and small letter in order to function
+				case "MOVE" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);
 			default : return "FAIL";
 			}
 		}
