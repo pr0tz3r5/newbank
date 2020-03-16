@@ -64,6 +64,8 @@ public class NewBank {
 				// Verified by SHOWMYACCOUNTS
 				// However, the Main and Savings must follow exactly the capital letter and small letter in order to function
 				case "MOVE" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);
+				// adding a "Move" comparing with "MOVE"
+				case "Move" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);
 			default : return "FAIL";
 			}
 		}
