@@ -15,10 +15,12 @@ public class NewBank {
 	//Test comment
 	private void addTestData() {
 		Customer bhagy = new Customer();
+		bhagy.setPassword("Test1");
 		bhagy.addAccount(new Account("Main", 1000.0));
 		customers.put("Bhagy", bhagy);
 
 		Customer christina = new Customer();
+		christina.setPassword("Test2");
 		christina.addAccount(new Account("Savings", 1500.0));
 		christina.addAccount(new Account("Main", 5000.0));
 		Account mainAccount = christina.getAccounts().get(1);
@@ -27,6 +29,7 @@ public class NewBank {
 		customers.put("Christina", christina);
 
 		Customer john = new Customer();
+		john.setPassword("Test3");
 		john.addAccount(new Account("Checking", 250.0));
 		customers.put("John", john);
 	}
@@ -37,7 +40,12 @@ public class NewBank {
 
 	public synchronized CustomerID checkLogInDetails(String userName, String password) {
 		if(customers.containsKey(userName)) {
-			return new CustomerID(userName);
+			if (customers.get(userName).checkPassword(password)) {
+				System.out.println("Login succeeded for " + userName);
+				return new CustomerID(userName);
+			} else {
+				System.out.println("Login failed for " + userName + ": shutting down client");
+			}
 		}
 		return null;
 	}
@@ -66,6 +74,7 @@ public class NewBank {
 				case "MOVE" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);
 				// adding a "Move" comparing with "MOVE"
 				case "Move" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);
+				case "PASSWD" : return changePasswd(customer, requestWords[1]);
 			default : return "FAIL";
 			}
 		}
@@ -82,6 +91,13 @@ public class NewBank {
 	private String newAccount(CustomerID customer, String accountName) {
 		customers.get(customer.getKey()).addAccount(new Account(accountName, 0.0));
 		return "SUCCESS";
+	}
+
+	private String changePasswd(CustomerID customer, String passwd) {
+		if (customers.get(customer.getKey()).changePassword(customer, passwd)) {
+			return "SUCCESS";
+		}
+		return "FAIL";
 	}
 
 	private String moveAccount(CustomerID customer, String amount, String account1, String account2) {
