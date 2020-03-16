@@ -35,8 +35,7 @@ public class Customer {
 	}
 
 	public Boolean checkPassword(String password) {
-		//Just returning true for now
-		return true;
+		return this.passwd.equals(password);
 	}
 
 	public Boolean checkPasswdFormat(String str) {
