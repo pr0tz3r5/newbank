@@ -86,11 +86,19 @@ public class NewBank {
 	}
 
 	/*Method to add a new account. Customer types in NEWACCOUNT followed by name of account
-	Example: NEWACCOUNT Savings. The account is created with a zero balance.
-	The customer should use MOVE to put money in the account.*/
+	Example: NEWACCOUNT Savings.
+	The account is created with a zero balance.
+	The customer should use MOVE to put money in the account.
+	Method prevents duplicate Account being created.*/
 	private String newAccount(CustomerID customer, String accountName) {
-		customers.get(customer.getKey()).addAccount(new Account(accountName, 0.0));
-		return "SUCCESS";
+		Customer currentCustomer = customers.get(customer.getKey());
+		Account isExistingAccount = currentCustomer.findAccount(accountName);
+		if (isExistingAccount!=null){
+			return "FAIL";
+		} else {
+			currentCustomer.addAccount(new Account(accountName, 0.0));
+			return "SUCCESS";
+		}
 	}
 
 	private String changePasswd(CustomerID customer, String passwd) {
