@@ -92,13 +92,12 @@ public class NewBank {
 	Method prevents duplicate Account being created.*/
 	private String newAccount(CustomerID customer, String accountName) {
 		Customer currentCustomer = customers.get(customer.getKey());
-		Account isExistingAccount = currentCustomer.findAccount(accountName);
-		if (isExistingAccount!=null){
-			return "FAIL";
-		} else {
-			currentCustomer.addAccount(new Account(accountName, 0.0));
+		if (currentCustomer.addAccount(new Account(accountName, 0.0))) {
 			return "SUCCESS";
+		} else {
+			return "FAIL";
 		}
+
 	}
 
 	private String changePasswd(CustomerID customer, String passwd) {

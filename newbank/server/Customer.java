@@ -54,8 +54,14 @@ public class Customer {
 		return isNumber && isLetter;
 	}
 
-	public void addAccount(Account account) {
-		accounts.add(account);
+	public boolean addAccount(Account account) {
+		Account isExistingAccount = findAccount(account.getName());
+		if (isExistingAccount==null) {
+			accounts.add(account);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public ArrayList<Account> getAccounts() {
