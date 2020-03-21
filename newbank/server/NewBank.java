@@ -60,7 +60,8 @@ public class NewBank {
 	public synchronized String processRequest(CustomerID customer, String request) {
 		String[] requestWords = request.split(" ");
 		if(customers.containsKey(customer.getKey())) {
-			switch(requestWords[0]) {
+			String userInput = requestWords[0].toUpperCase();//allow user inputs with lower cases, implemented by Chi
+			switch(userInput) {
 				//This is the case for showing account of particular customer
 				case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
 				// This is a adding new account implemented by Jane.
