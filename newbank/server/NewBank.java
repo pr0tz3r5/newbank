@@ -138,6 +138,7 @@ public class NewBank {
 			response.append("\t");
 			response.append(transaction.getAmount());
 			response.append("\n");
+			transactionIndex++;
 		}
 		return response.toString();
 	}
