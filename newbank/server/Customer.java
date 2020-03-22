@@ -78,6 +78,12 @@ public class Customer {
 		}
 	}
 
+	public boolean transfer(Customer sender, Customer receiver, Double amount) {
+		Account origAccount = sender.findAccount("Main");
+		Account destAccount = receiver.findAccount("Main");
+		return move(amount, origAccount, destAccount);
+	}
+
 	public Account findAccount(String accountName) {
 		for (Account account : accounts) {
         if (account.getName().equals(accountName)) {

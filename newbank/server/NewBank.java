@@ -2,6 +2,8 @@ package newbank.server;
 
 import java.util.HashMap;
 
+import static newbank.server.Customer.*;
+
 public class NewBank {
 
 	private static final NewBank bank = new NewBank();
@@ -30,7 +32,7 @@ public class NewBank {
 
 		Customer john = new Customer();
 		john.setPassword("Test3");
-		john.addAccount(new Account("Checking", 250.0));
+		john.addAccount(new Account("Main", 250.0));
 		customers.put("John", john);
 	}
 
@@ -77,6 +79,7 @@ public class NewBank {
 				case "Move" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);
 				case "PASSWD" : return changePasswd(customer, requestWords[1]);
 				case "TRANSACTIONS": return transactions(customer, requestWords[1]);
+				case "PAY": return payAccount(customer, requestWords[1], requestWords[2]);
 			default : return "FAIL";
 			}
 		}
@@ -142,6 +145,22 @@ public class NewBank {
 			transactionIndex++;
 		}
 		return response.toString();
+	}
+
+	private String payAccount(CustomerID customerID, String recipient, String amount) {
+		try {
+			Double.parseDouble(amount.trim());
+		} catch(NumberFormatException e) {
+			return "FAIL";
+		}
+		Customer sender = customers.get(customerID.getKey());
+		Customer receiver = customers.get(recipient);
+
+		if (sender.transfer(sender, receiver, Double.parseDouble(amount))) {
+			return "SUCCESS";
+		} else {
+			return "FAIL";
+		}
 	}
 
 }
