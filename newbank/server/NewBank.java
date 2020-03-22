@@ -75,6 +75,7 @@ public class NewBank {
 				// adding a "Move" comparing with "MOVE"
 				case "Move" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);
 				case "PASSWD" : return changePasswd(customer, requestWords[1]);
+				case "TRANSACTIONS": return transactions(customer, requestWords[1]);
 			default : return "FAIL";
 			}
 		}
@@ -117,6 +118,28 @@ public class NewBank {
 		} else {
 			return "FAIL";
 		}
+	}
+
+	private String transactions(CustomerID customerId, String accountName) {
+		Customer customer = customers.get(customerId.getKey());
+		Account selectedAccount = customer.findAccount(accountName);
+		if (selectedAccount == null) {
+			return "Account not found.";
+		}
+		if (selectedAccount.getTransactionList().size() == 0) {
+			return "No transactions.";
+		}
+		StringBuilder response = new StringBuilder();
+		int transactionIndex = 1;
+		for (Transaction transaction : selectedAccount.getTransactionList()) {
+			response.append(transactionIndex);
+			response.append(".\t");
+			response.append(transaction.getDescription());
+			response.append("\t");
+			response.append(transaction.getAmount());
+			response.append("\n");
+		}
+		return response.toString();
 	}
 
 }

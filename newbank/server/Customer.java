@@ -69,11 +69,11 @@ public class Customer {
 	}
 
 	public boolean move(double amount, Account origAccount, Account destAccount) {
-		if (origAccount.getBalance() >= amount) {
-			origAccount.setBalance(origAccount.getBalance() - amount);
-			destAccount.setBalance(destAccount.getBalance() + amount);
+		try {
+			origAccount.debit(amount, "Move to " + destAccount.getName());
+			destAccount.credit(amount, "Move from " + origAccount.getName());
 			return true;
-		} else {
+		} catch (InsufficientBalanceException e) {
 			return false;
 		}
 	}
