@@ -80,6 +80,7 @@ public class NewBank {
 				case "PASSWD" : return changePasswd(customer, requestWords[1]);
 				case "TRANSACTIONS": return transactions(customer, requestWords[1]);
 				case "PAY": return payAccount(customer, requestWords[1], requestWords[2]);
+				case "LOGOUT": return "LOGOUT";
 			default : return "FAIL";
 			}
 		}
