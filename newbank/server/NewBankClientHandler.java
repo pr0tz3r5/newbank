@@ -11,6 +11,7 @@ public class NewBankClientHandler extends Thread{
 	private NewBank bank;
 	private BufferedReader in;
 	private PrintWriter out;
+	private static final int MAXIMUM_LOGIN_ATTEMPTS = 3;
 
 
 	public NewBankClientHandler(Socket s) throws IOException {
@@ -25,14 +26,24 @@ public class NewBankClientHandler extends Thread{
 			// ask for user name
 			out.println("Enter Username");
 			String userName = in.readLine();
-			// ask for password
-			out.println("Enter Password");
-			String password = in.readLine();
-			out.println("Checking Details...");
 			// authenticate user and get customer ID token from bank for use in subsequent requests
-			CustomerID customer = bank.checkLogInDetails(userName, password);
-			// if the user is authenticated then get requests from the user and process them
-			if(customer != null) {
+			int loginAttempts = 0;
+			CustomerID customer = null;
+			while (customer == null && loginAttempts < MAXIMUM_LOGIN_ATTEMPTS) {
+				out.println("Enter Password");
+				String password = in.readLine();
+				out.println("Checking Details...");
+				customer = bank.checkLogInDetails(userName, password);
+				if (customer == null) {
+					out.println("Invalid credentials.");
+				}
+				loginAttempts++;
+			}
+			// If still null after 3 attempts
+			if (customer == null) {
+				out.println("Maximum login attempts reached.");
+				return;
+			} else {
 				out.println("Log In Successful. What do you want to do?");
 				while(true) {
 					String request = in.readLine();
@@ -47,9 +58,6 @@ public class NewBankClientHandler extends Thread{
 
 					out.println(response);
 				}
-			}
-			else {
-				out.println("Log In Failed");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
