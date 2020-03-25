@@ -46,7 +46,7 @@ public class NewBank {
 				System.out.println("Login succeeded for " + userName);
 				return new CustomerID(userName);
 			} else {
-				System.out.println("Login failed for " + userName + ": shutting down client");
+				System.out.println("Login failed for " + userName + ".");
 			}
 		}
 		return null;
