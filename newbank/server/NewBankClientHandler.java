@@ -43,9 +43,7 @@ public class NewBankClientHandler extends Thread{
 			if (customer == null) {
 				out.println("Maximum login attempts reached.");
 				return;
-			}
-			// if the user is authenticated then get requests from the user and process them
-			if(customer != null) {
+			} else {
 				out.println("Log In Successful. What do you want to do?");
 				while(true) {
 					String request = in.readLine();
@@ -60,9 +58,6 @@ public class NewBankClientHandler extends Thread{
 
 					out.println(response);
 				}
-			}
-			else {
-				out.println("Log In Failed");
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
