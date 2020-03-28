@@ -81,6 +81,7 @@ public class NewBank {
 				case "TRANSACTIONS": return transactions(customer, requestWords[1]);
 				case "PAY": return payAccount(customer, requestWords[1], requestWords[2]);
 				case "LOGOUT": return "LOGOUT";
+				case "EXIT": return "EXIT";//Exit function implemented by Chi
 			default : return "FAIL";
 			}
 		}
@@ -163,5 +164,6 @@ public class NewBank {
 			return "FAIL";
 		}
 	}
+
 
 }

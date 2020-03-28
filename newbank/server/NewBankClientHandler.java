@@ -55,6 +55,10 @@ public class NewBankClientHandler extends Thread{
 						out.println("LOGOUT SUCCESS.");
 						run();
 					}
+					else if(response == "EXIT"){//exit function implemented by Chi
+						out.println("TERMINAL HAS BEEN CLOSED");
+						System.exit(0);
+					}
 
 					out.println(response);
 				}
