@@ -13,7 +13,6 @@ public class NewBankClientHandler extends Thread{
 	private PrintWriter out;
 	private static final int MAXIMUM_LOGIN_ATTEMPTS = 3;
 
-
 	public NewBankClientHandler(Socket s) throws IOException {
 		bank = NewBank.getBank();
 		in = new BufferedReader(new InputStreamReader(s.getInputStream()));
@@ -56,8 +55,8 @@ public class NewBankClientHandler extends Thread{
 						run();
 					}
 					else if(response == "EXIT"){//exit function implemented by Chi
-						out.println("TERMINAL HAS BEEN CLOSED");
-						System.exit(0);
+						out.println("Terminal has been closed.");
+						return;//exit function implemented by Chi
 					}
 
 					out.println(response);
