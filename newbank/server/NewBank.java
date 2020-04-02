@@ -67,7 +67,7 @@ public class NewBank {
 				//This is the case for showing account of particular customer
 				case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
 				// This is a adding new account implemented by Jane.
-				// Input:customer name & Output: Success or Fail
+				// Input:account name & Output: Success or Fail
 				case "NEWACCOUNT" : return newAccount(customer, requestWords[1]);
 				// This is a "move" implemented by Long Ng
 				// The Move will add amount ($) from either Main/Savings to another account
