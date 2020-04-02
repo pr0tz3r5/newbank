@@ -28,19 +28,16 @@ public class Customer {
 		passwd = password;
 	}
 
-	public Boolean changePassword(CustomerID customer, String password) {
+	public String changePassword(CustomerID customer, String password) {
 		if (password.length()<=8) {  // add to check the password length
-			System.out.println("Password length should be at least 8");
-			return false;
+			return "FAIL: Password length should be at least 8 and contain letters and numbers";
 		}
 		if (this.checkPasswdFormat(password)) {
 			passwd = password;
-			System.out.println("Password changed for " + customer.getKey());
-			return true;
+			return "Password changed for " + customer.getKey();
 		} else {
-			System.out.println("Password change attempt failed for " + customer.getKey());
+			return "FAIL: Password length should be at least 8 and contain letters and numbers";
 		}
-		return false;
 	}
 
 	public Boolean checkPassword(String password) {

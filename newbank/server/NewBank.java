@@ -109,10 +109,7 @@ public class NewBank {
 	}
 
 	private String changePasswd(CustomerID customer, String passwd) {
-		if (customers.get(customer.getKey()).changePassword(customer, passwd)) {
-			return "SUCCESS";
-		}
-		return "FAIL";
+		return customers.get(customer.getKey()).changePassword(customer, passwd);
 	}
 
 	private String moveAccount(CustomerID customer, String amount, String account1, String account2) {
