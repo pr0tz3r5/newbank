@@ -9,6 +9,7 @@ public class Account {
 	private double openingBalance;
 	private List<Transaction> transactionList;
 
+
 	public Account(String accountName, double openingBalance) {
 		this.accountName = accountName;
 		this.openingBalance = openingBalance;
@@ -55,4 +56,5 @@ public class Account {
 	public List<Transaction> getTransactionList() {
 		return transactionList;
 	}
+
 }

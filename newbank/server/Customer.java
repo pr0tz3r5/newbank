@@ -1,14 +1,19 @@
 package newbank.server;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Customer {
 
 	private ArrayList<Account> accounts;
+	private List<Loan> toLoanList;
+	private List<Loan> fromLoanList;
 	private String passwd;
 
 	public Customer() {
 		accounts = new ArrayList<>();
+		toLoanList = new ArrayList<>();
+		fromLoanList = new ArrayList<>();
 	}
 
 	public String accountsToString() {
@@ -95,5 +100,35 @@ public class Customer {
         }
     }
     return null;
+	}
+
+	public List<Loan> getToLoanList() { return toLoanList; }
+	public List<Loan> getFromLoanList() { return fromLoanList; }
+
+	public boolean loan(Customer loanee, double amount) {
+		Loan newLoan = new Loan(loanee, amount);
+		if (transfer(this, loanee, amount)) {
+			Customer.addLoanTo(this, newLoan, "TO");
+			Customer.addLoanTo(loanee, newLoan, "FROM");
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public void addToLoanList(Loan loan) {
+		this.toLoanList.add(loan);
+	}
+
+	public void addFromLoanList(Loan loan) {
+		this.fromLoanList.add(loan);
+	}
+
+	public static void addLoanTo(Customer customer, Loan loan, String type) {
+		if(type == "TO") {
+			customer.addToLoanList(loan);
+		} else if (type == "FROM") {
+			customer.addFromLoanList(loan);
+		}
 	}
 }
