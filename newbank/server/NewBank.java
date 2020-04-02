@@ -109,7 +109,11 @@ public class NewBank {
 	}
 
 	private String changePasswd(CustomerID customer, String passwd) {
-		return customers.get(customer.getKey()).changePassword(customer, passwd);
+		if(customers.get(customer.getKey()).changePassword(customer, passwd)){
+			return "Password changed for " + customer.getKey();
+		} else{
+			return "FAIL: Password length should be at least 8 and contain letters and numbers";
+		}
 	}
 
 	private String moveAccount(CustomerID customer, String amount, String account1, String account2) {
