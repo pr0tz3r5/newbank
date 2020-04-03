@@ -73,10 +73,7 @@ public class NewBank {
 				// The Move will add amount ($) from either Main/Savings to another account
 				// Input: MOVE 300 Main Savings & Output: SUCCESS or FAIL
 				// Verified by SHOWMYACCOUNTS
-				// However, the Main and Savings must follow exactly the capital letter and small letter in order to function
 				case "MOVE" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);
-				// adding a "Move" comparing with "MOVE"
-				case "Move" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);
 				case "PASSWD" : return changePasswd(customer, requestWords[1]);
 				case "TRANSACTIONS": return transactions(customer, requestWords[1]);
 				case "PAY": return payAccount(customer, requestWords[1], requestWords[2]);
