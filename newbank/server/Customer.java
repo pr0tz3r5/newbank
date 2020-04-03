@@ -29,18 +29,12 @@ public class Customer {
 	}
 
 	public Boolean changePassword(CustomerID customer, String password) {
-		if (password.length()<=8) {  // add to check the password length
-			System.out.println("Password length should be at least 8");
-			return false;
-		}
-		if (this.checkPasswdFormat(password)) {
+		if (password.length()>=8 && this.checkPasswdFormat(password)) {
 			passwd = password;
-			System.out.println("Password changed for " + customer.getKey());
 			return true;
 		} else {
-			System.out.println("Password change attempt failed for " + customer.getKey());
+			return false;
 		}
-		return false;
 	}
 
 	public Boolean checkPassword(String password) {

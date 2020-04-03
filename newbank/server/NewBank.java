@@ -67,7 +67,7 @@ public class NewBank {
 				//This is the case for showing account of particular customer
 				case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
 				// This is a adding new account implemented by Jane.
-				// Input:customer name & Output: Success or Fail
+				// Input:account name & Output: Success or Fail
 				case "NEWACCOUNT" : return newAccount(customer, requestWords[1]);
 				// This is a "move" implemented by Long Ng
 				// The Move will add amount ($) from either Main/Savings to another account
@@ -109,10 +109,11 @@ public class NewBank {
 	}
 
 	private String changePasswd(CustomerID customer, String passwd) {
-		if (customers.get(customer.getKey()).changePassword(customer, passwd)) {
-			return "SUCCESS";
+		if(customers.get(customer.getKey()).changePassword(customer, passwd)){
+			return "Password changed for " + customer.getKey();
+		} else{
+			return "FAIL: Password length should be at least 8 and contain letters and numbers";
 		}
-		return "FAIL";
 	}
 
 	private String moveAccount(CustomerID customer, String amount, String account1, String account2) {
