@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class NewBankClientHandler extends Thread{
 
@@ -12,6 +13,7 @@ public class NewBankClientHandler extends Thread{
 	private BufferedReader in;
 	private PrintWriter out;
 	private static final int MAXIMUM_LOGIN_ATTEMPTS = 3;
+
 
 	public NewBankClientHandler(Socket s) throws IOException {
 		bank = NewBank.getBank();
@@ -43,7 +45,9 @@ public class NewBankClientHandler extends Thread{
 				out.println("Maximum login attempts reached.");
 				return;
 			} else {
+
 				out.println("Log In Successful. What do you want to do?");
+				printAvailableCommands();
 				while(true) {
 					String request = in.readLine();
 					System.out.println("Request from " + customer.getKey());
@@ -60,6 +64,7 @@ public class NewBankClientHandler extends Thread{
 					}
 
 					out.println(response);
+					printAvailableCommands();
 				}
 			}
 		} catch (IOException e) {
@@ -75,5 +80,14 @@ public class NewBankClientHandler extends Thread{
 			}
 		}
 	}
-
+	private void printAvailableCommands(){
+		Display display = new Display();
+		ArrayList<String> commands;
+		commands = display.availableCommands();//Create array of commands available to the customer.
+		out.println();
+		out.println("The commands available to you are:");
+		commands.forEach((x)-> out.println(x));//Print out array of commands
+		out.println("(Commands are shown in UPPERCASE and parameters in lowercase.)");
+		out.println("(RecipientNames and AccountNames are case sensitive. Example: Christina)");
+	}
 }
