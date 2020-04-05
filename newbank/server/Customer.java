@@ -142,7 +142,7 @@ public class Customer {
 			Loan loanToBePaid = findLoan(loaner, this.fromLoanList);
 			Loan loanersLoan = findLoan(loaner, loaner.toLoanList);
 			double loanAmount = loanToBePaid.getLoanAmount();
-			if(loanAmount > amount) {//only allow to pay amount which is less or equal to loanAmount.
+			if(loanAmount >= amount) {//only allow to pay amount which is less or equal to loanAmount.
 				if (transfer(this,loaner,amount)) {
 					updateLoan(loanToBePaid, amount, this.fromLoanList);
 					updateLoan(loanersLoan, amount, loaner.toLoanList);
