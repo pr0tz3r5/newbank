@@ -1,3 +1,11 @@
+/************************************************************
+ *             NewBankServer.java   						*
+ * 															*
+ * This is the class that needs to be run for the server.	*
+ * It starts up a new client handler thread to receive		*
+ * incoming transactions and process requests.				*
+ * **********************************************************/
+
 package newbank.server;
 
 import java.io.IOException;

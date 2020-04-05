@@ -1,3 +1,10 @@
+/************************************************************
+ *             ExampleClient.java   						*
+ * 															*
+ * This is the class that needs to be run for each client.	*
+ * 															*
+ * **********************************************************/
+
 package newbank.client;
 
 import java.io.BufferedReader;

@@ -1,3 +1,14 @@
+/********************************************************************
+ *             Account.java   										*
+ * 																	*
+ * This is the class that is the object Account.					*
+ * The constructor is of the form 									*
+ * Account (String accountName, double openingBalance).				*
+ * It contains a method to print to a String "accountName: Balance"	*
+ * It contains getters to return the accountName or balance.		*
+ * It also contains methods to change the balance.					*
+ * ******************************************************************/
+
 package newbank.server;
 
 import java.util.ArrayList;

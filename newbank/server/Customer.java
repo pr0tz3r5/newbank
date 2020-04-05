@@ -1,3 +1,15 @@
+/****************************************************************************
+ *             Customer.java   												*
+ * 																			*
+ * This is the class for the object Customer.								*
+ * The constructor is of the form 											*
+ * Customer ().																*
+ * It creates the list of accounts and the list of loans the customer has.	*
+ * It contains all the methods to change the customer's loans and 			*
+ * accounts.																*
+ * It contains the methods to set and change the customer's password.		*
+ * **************************************************************************/
+
 package newbank.server;
 
 import java.util.ArrayList;
