@@ -129,6 +129,14 @@ public class Customer {
 			return false;
 		}
 	}
+	
+	private void updateLoan(Loan loan, double amount, List<Loan> loanList){
+		int i = loanList.indexOf(loan);
+		loanList.remove(i);
+		double loanAmount = loan.getLoanAmount();
+		loan.updateLoanAmount(loanAmount - amount);
+		loanList.add(loan);
+	}
 
 	public boolean payLoan(Customer loaner, double amount){
 		if(loanExists(loaner)){
@@ -137,15 +145,8 @@ public class Customer {
 			double loanAmount = loanToBePaid.getLoanAmount();
 			if(loanAmount > amount) {//only allow to pay amount which is less or equal to loanAmount.
 				if (transfer(this,loaner,amount)) {
-					int i = this.fromLoanList.indexOf(loanToBePaid);
-					this.fromLoanList.remove(i);
-					loanToBePaid.updateLoanAmount(loanAmount - amount);
-					this.fromLoanList.add(loanToBePaid);
-
-					int j = loaner.toLoanList.indexOf(loanersLoan);
-					loaner.toLoanList.remove(j);
-					loanersLoan.updateLoanAmount(loanAmount - amount);
-					loaner.toLoanList.add(loanersLoan);
+					updateLoan(loanToBePaid, amount, this.fromLoanList);
+					updateLoan(loanersLoan, amount, loaner.toLoanList);
 					return true;
 
 				} else {
