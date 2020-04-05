@@ -99,7 +99,7 @@ public class Customer {
 	public List<Loan> getToLoanList() { return toLoanList; }
 	public List<Loan> getFromLoanList() { return fromLoanList; }
 
-	private boolean loanExists(Customer customer){//implemented by Chi
+	private boolean loanExists(Customer customer){
 		//check if the loan exists
 		for (Loan l : this.fromLoanList){
 			Customer loaner = l.getLoaner();
@@ -111,7 +111,7 @@ public class Customer {
 		return false;
 	}
 
-	private Loan findLoan(Customer customer, List<Loan> loanList){//implemented by Chi
+	private Loan findLoan(Customer customer, List<Loan> loanList){
 		//this method should only be called if loanExits method returns true.
 		for(Loan l : loanList){
 			Customer loaner = l.getLoaner();
@@ -134,7 +134,7 @@ public class Customer {
 		}
 	}
 
-	public boolean payLoan(Customer loaner, double amount){//implemented by Chi
+	public boolean payLoan(Customer loaner, double amount){
 		if(loanExists(loaner)){
 			Loan loanToBePaid = findLoan(loaner,this.fromLoanList);
 			Loan loanersLoan = findLoan(loaner,loaner.toLoanList);
