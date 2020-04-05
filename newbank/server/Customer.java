@@ -104,7 +104,6 @@ public class Customer {
 			return true;
 		}
   		return false;
-	}turn false;
 	}
 	
 	//this method should only be called if loanExits method returns true.
