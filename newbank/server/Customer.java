@@ -23,14 +23,14 @@ public class Customer {
 	private String passwd;
 
 	public Customer() {
-		accounts = new ArrayList<>();
-		toLoanList = new ArrayList<>();
-		fromLoanList = new ArrayList<>();
+		this.accounts = new ArrayList<>();
+		this.toLoanList = new ArrayList<>();
+		this.fromLoanList = new ArrayList<>();
 	}
 
 	public String accountsToString() {
 		String s = "";
-		for(Account a : accounts) {
+		for(Account a : this.accounts) {
 			s += a.toString();
 		}
 		return s;
@@ -111,12 +111,62 @@ public class Customer {
 	public List<Loan> getToLoanList() { return toLoanList; }
 	public List<Loan> getFromLoanList() { return fromLoanList; }
 
+	private boolean loanExists(Customer customer){
+		if(findLoan(customer, this.fromLoanList) != null) {
+			return true;
+		}
+  		return false;
+	}
+	
+	//this method should only be called if loanExits method returns true.
+	private Loan findLoan(Customer customer, List<Loan> loanList){
+		for(Loan l : loanList){
+			Customer loaner = l.getLoaner();
+			String loanerName = loaner.accountsToString();
+			if(loanerName.equals(customer.accountsToString())){
+				return l;
+			}
+		}
+		return null;
+	}
+
 	public boolean loan(Customer loanee, double amount) {
-		Loan newLoan = new Loan(loanee, amount);
+		Loan newLoan = new Loan(this, loanee, amount);
 		if (transfer(this, loanee, amount)) {
 			Customer.addLoanTo(this, newLoan, "TO");
 			Customer.addLoanTo(loanee, newLoan, "FROM");
 			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private void updateLoan(Loan loan, double amount, List<Loan> loanList){
+		int i = loanList.indexOf(loan);
+		loanList.remove(i);
+		double loanAmount = loan.getLoanAmount();
+		loan.updateLoanAmount(loanAmount - amount);
+		loanList.add(loan);
+	}
+
+	public boolean payLoan(Customer loaner, double amount){
+		if(loanExists(loaner)){
+			Loan loanToBePaid = findLoan(loaner, this.fromLoanList);
+			Loan loanersLoan = findLoan(loaner, loaner.toLoanList);
+			double loanAmount = loanToBePaid.getLoanAmount();
+			if(loanAmount >= amount) {//only allow to pay amount which is less or equal to loanAmount.
+				if (transfer(this,loaner,amount)) {
+					updateLoan(loanToBePaid, amount, this.fromLoanList);
+					updateLoan(loanersLoan, amount, loaner.toLoanList);
+					return true;
+
+				} else {
+					return false;
+				}
+			} else{
+				System.out.println("FAIL:The amount is greater than the loan.");
+				return false;
+			}
 		} else {
 			return false;
 		}
