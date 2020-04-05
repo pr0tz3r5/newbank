@@ -110,9 +110,9 @@ public class Customer {
 		}
 		return false;
 	}
-
+	
+	//this method should only be called if loanExits method returns true.
 	private Loan findLoan(Customer customer, List<Loan> loanList){
-		//this method should only be called if loanExits method returns true.
 		for(Loan l : loanList){
 			Customer loaner = l.getLoaner();
 			String loanerName = loaner.accountsToString();
