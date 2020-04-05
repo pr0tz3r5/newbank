@@ -100,15 +100,11 @@ public class Customer {
 	public List<Loan> getFromLoanList() { return fromLoanList; }
 
 	private boolean loanExists(Customer customer){
-		//check if the loan exists
-		for (Loan l : this.fromLoanList){
-			Customer loaner = l.getLoaner();
-			String loanerName = loaner.accountsToString();
-			if(loanerName.equals(customer.accountsToString())){
-				return true;
-			}
+		if(findLoan(customer, this.fromLoanList) != null) {
+			return true;
 		}
-		return false;
+  		return false;
+	}turn false;
 	}
 	
 	//this method should only be called if loanExits method returns true.
