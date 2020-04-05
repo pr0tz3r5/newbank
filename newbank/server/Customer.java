@@ -120,7 +120,7 @@ public class Customer {
 	}
 
 	public boolean loan(Customer loanee, double amount) {
-		Loan newLoan = new Loan(this,loanee, amount);
+		Loan newLoan = new Loan(this, loanee, amount);
 		if (transfer(this, loanee, amount)) {
 			Customer.addLoanTo(this, newLoan, "TO");
 			Customer.addLoanTo(loanee, newLoan, "FROM");
@@ -132,8 +132,8 @@ public class Customer {
 
 	public boolean payLoan(Customer loaner, double amount){
 		if(loanExists(loaner)){
-			Loan loanToBePaid = findLoan(loaner,this.fromLoanList);
-			Loan loanersLoan = findLoan(loaner,loaner.toLoanList);
+			Loan loanToBePaid = findLoan(loaner, this.fromLoanList);
+			Loan loanersLoan = findLoan(loaner, loaner.toLoanList);
 			double loanAmount = loanToBePaid.getLoanAmount();
 			if(loanAmount > amount) {//only allow to pay amount which is less or equal to loanAmount.
 				if (transfer(this,loaner,amount)) {
