@@ -60,7 +60,7 @@ public class NewBank {
 
 	// This function is easy to get NULL and loop if input the character not in exact format and looping
 	public synchronized String processRequest(CustomerID customer, String request) {
-		String[] requestWords = request.split(" ");
+		String[] requestWords = request.split(" ");//Input command is split into words and stored in an array.
 		if(customers.containsKey(customer.getKey())) {
 			String userInput = requestWords[0].toUpperCase();//allow user inputs with lower cases, implemented by Chi
 			switch(userInput) {
@@ -68,18 +68,18 @@ public class NewBank {
 				case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
 				// This is a adding new account implemented by Jane.
 				// Input:account name & Output: Success or Fail
-				case "NEWACCOUNT" : return newAccount(customer, requestWords[1]);
+				case "NEWACCOUNT" : if (requestWords.length==2){return newAccount(customer, requestWords[1]);}else{ return "FAIL";}
 				// This is a "move" implemented by Long Ng
 				// The Move will add amount ($) from either Main/Savings to another account
 				// Input: MOVE 300 Main Savings & Output: SUCCESS or FAIL
 				// Verified by SHOWMYACCOUNTS
-				case "MOVE" : return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);
-				case "PASSWD" : return changePasswd(customer, requestWords[1]);
-				case "TRANSACTIONS": return transactions(customer, requestWords[1]);
-				case "PAY": return payAccount(customer, requestWords[1], requestWords[2]);
-				case "LOAN": return loan(customer, requestWords[1], requestWords[2]);
-				case "PAYMYLOAN": return payLoan(customer, requestWords[1], requestWords[2]);
-				case "WITHDRAW": return withdraw(customer, requestWords[1], requestWords[2]);
+				case "MOVE" : if (requestWords.length==4){return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);}else{ return "FAIL";}
+				case "PASSWD" : if (requestWords.length==2){return changePasswd(customer, requestWords[1]);}else{ return "FAIL";}
+				case "TRANSACTIONS": if (requestWords.length==2){return transactions(customer, requestWords[1]);}else{ return "FAIL";}
+				case "PAY": if (requestWords.length==3){return payAccount(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
+				case "LOAN": if (requestWords.length==3){return loan(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
+				case "PAYMYLOAN": if (requestWords.length==3){return payLoan(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
+				case "WITHDRAW": if (requestWords.length==3){return withdraw(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
 				case "LOGOUT": return "LOGOUT";
 				case "EXIT": return "EXIT";//Exit function implemented by Chi
 			default : return "FAIL";
