@@ -1,3 +1,11 @@
+/********************************************************************
+ *             NewBankClientHandler.java   							*
+ * 																	*
+ * This is the class that takes in the requests from the client		*
+ * and processes them.												*
+ * 																	*
+ * ******************************************************************/
+
 package newbank.server;
 
 import java.io.BufferedReader;

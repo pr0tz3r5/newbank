@@ -78,6 +78,7 @@ public class NewBank {
 				case "TRANSACTIONS": return transactions(customer, requestWords[1]);
 				case "PAY": return payAccount(customer, requestWords[1], requestWords[2]);
 				case "LOAN": return loan(customer, requestWords[1], requestWords[2]);
+				case "PAYMYLOAN": return payLoan(customer, requestWords[1], requestWords[2]);
 				case "LOGOUT": return "LOGOUT";
 				case "EXIT": return "EXIT";//Exit function implemented by Chi
 			default : return "FAIL";
@@ -168,6 +169,14 @@ public class NewBank {
 		Customer loaner = customers.get(customerID.getKey());
 		Customer loanee = customers.get(recipient);
 		if (loaner.loan(loanee, Double.parseDouble(amount))){
+			return "SUCCESS";
+		}
+		return "FAIL";
+	}
+	private String payLoan(CustomerID customerID, String recipient, String amount) {
+		Customer loanee = customers.get(customerID.getKey());
+		Customer loaner = customers.get(recipient);
+		if (loanee.payLoan(loaner, Double.parseDouble(amount))){
 			return "SUCCESS";
 		}
 		return "FAIL";
