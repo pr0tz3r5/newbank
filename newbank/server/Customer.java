@@ -31,7 +31,7 @@ public class Customer {
 	public String accountsToString() {
 		String s = "";
 		for(Account a : this.accounts) {
-			s += a.toString() + "  ";
+			s += a.toString()+"\n";
 		}
 		return s;
 	}
