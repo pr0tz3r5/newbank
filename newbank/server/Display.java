@@ -14,14 +14,15 @@ public class Display {
     public Display(){
         commands = new ArrayList<>();
         commands.add("SHOWMYACCOUNTS");
-        commands.add("NEWACCOUNT NewAccountName");
-        commands.add("PAY RecipientName Amount");
-        commands.add("MOVE amount FromAccountName ToAccountName");
-        commands.add("PASSWD NewPassword");
-        commands.add("TRANSACTIONS AccountName");
+        commands.add("NEWACCOUNT <Name>");
+        commands.add("PAY <Person/Company> <Amount>");
+        commands.add("MOVE <Amount> <From> <To>");
+        commands.add("WITHDRAW <Amount> <From>");
+        commands.add("PASSWD <newPassword>");
+        commands.add("TRANSACTIONS <Account>");
         commands.add("SHOWMYLOANS");
-        commands.add("LOAN RecipientName Amount");
-        commands.add("PAYMYLOAN RecipientName Amount");
+        commands.add("LOAN <Person/Company> <Amount>");
+        commands.add("PAYMYLOAN <Person/Company> <Amount>");
         commands.add("LOGOUT");
         commands.add("EXIT");
     }

@@ -95,7 +95,6 @@ public class NewBankClientHandler extends Thread{
 		out.println();
 		out.println("The commands available to you are:");
 		commands.forEach((x)-> out.println(x));//Print out array of commands
-		out.println("(Commands are shown in UPPERCASE and parameters in lowercase.)");
-		out.println("(RecipientNames and AccountNames are case sensitive. Example: Christina)");
+		out.println("(Customer Names and Account Names are case sensitive. Example: Main)");
 	}
 }
