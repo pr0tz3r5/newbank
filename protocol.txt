@@ -7,13 +7,64 @@ Returns a list of all the customers accounts along with their current balance
 e.g. Main: 1000.0 
 
 NEWACCOUNT <Name>
+Creates a new account for the customer
 e.g. NEWACCOUNT Savings
 Returns SUCCESS or FAIL
 
 MOVE <Amount> <From> <To>
+Moves money from one account to another (for the same customer).
 e.g. MOVE 100 Main Savings 
 Returns SUCCESS or FAIL
 
-PAY <Person/Company> <Ammount>
+PAY <Person/Company> <Amount>
+Moves money from the customer's Main account to another customer's Main account.
 e.g. PAY John 100
 Returns SUCCESS or FAIL
+
+WITHDRAW <Amount> <From>
+Withdraws cash from the customer's account.
+e.g. WITHDRAW 100 Main
+Returns SUCCESS or FAIL
+
+PASSWD <Password>
+Changes the customer's password.
+New password must be at least 8 characters long and contain letters and numbers.
+e.g. PASSWD Test12345
+Returns SUCCESS or FAIL
+
+TRANSACTIONS <Account>
+Returns a list of all the transactions that have occurred on the customer's chosen account.
+e.g. TRANSACTIONS Main
+1.	Move to Savings	-250.0
+2.  Move to Tax -100.0
+
+SHOWMYLOANS
+Returns a list of all the amounts owed to the customer and the anounts owing to other customers.
+e.g.  I owe the following amounts:
+         John £250
+      I am owed the following amounts:
+         Christina £500.
+
+LOAN <Person/Company> <Amount>
+Gives a loan from the customer to another customer.
+Moves money from the customer's Main account to another customer's Main account.
+Creates a loan account for each customer.
+(Different types of loan account depending on whether they are the lender or the borrower.)
+e.g. LOAN Christina 100
+Returns SUCCESS or FAIL
+
+PAYMYLOAN <Person/Company> <Amount>
+Pays back part of a loan given previously by another customer.
+Moves money from the customer's Main account to another customer's Main account.
+Reduces balance of loan account for each customer.
+(Different types of loan account depending on whether they are the lender or the borrower.)
+e.g. PAYMYLOAN John 150
+Returns SUCCESS or FAIL
+
+LOGOUT
+Logs the customer out of the bank system and returns a new login prompt.
+e.g.    LOGOUT SUCCESS.
+        Enter Username
+
+EXIT
+Closes client terminal and no further input is possible without running client again.
