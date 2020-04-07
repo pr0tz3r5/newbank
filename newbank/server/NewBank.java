@@ -79,6 +79,7 @@ public class NewBank {
 				case "PAY": return payAccount(customer, requestWords[1], requestWords[2]);
 				case "LOAN": return loan(customer, requestWords[1], requestWords[2]);
 				case "PAYMYLOAN": return payLoan(customer, requestWords[1], requestWords[2]);
+				case "WITHDRAW": return withdraw(customer, requestWords[1], requestWords[2]);
 				case "LOGOUT": return "LOGOUT";
 				case "EXIT": return "EXIT";//Exit function implemented by Chi
 			default : return "FAIL";
@@ -180,5 +181,21 @@ public class NewBank {
 			return "SUCCESS";
 		}
 		return "FAIL";
+	}
+
+	private String withdraw(CustomerID customerID, String amount, String accountName) {
+		Customer customer = customers.get(customerID.getKey());
+		Account account = customer.findAccount(accountName);
+		if (account == null) {
+			return "FAIL";
+		}
+		try {
+			double withdrawal = Double.parseDouble(amount);
+			account.debit(withdrawal, "Cash withdrawal");
+			// Dispense cash here
+			return "SUCCESS";
+		} catch (Exception e) {
+			return "FAIL";
+		}
 	}
 }
