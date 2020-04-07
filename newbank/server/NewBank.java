@@ -1,3 +1,13 @@
+/****************************************************************************
+ *             NewBank.java   												*
+ * 																			*
+ * This is the class that creates the bank and adds test data for 3			*
+ * customers.																*
+ * It contains the method to check the login details for the customer.		*
+ * It also contains the methods to process the commands input by the		*
+ * customer.														 		*
+ * More detail for each of these methods is shown below with the methods.	*
+ * **************************************************************************/
 package newbank.server;
 
 import java.util.HashMap;
@@ -39,7 +49,7 @@ public class NewBank {
 	public static NewBank getBank() {
 		return bank;
 	}
-
+	/* Method to check the customer is an authorised user and has the correct password */
 	public synchronized CustomerID checkLogInDetails(String userName, String password) {
 		if(customers.containsKey(userName)) {
 			if (customers.get(userName).checkPassword(password)) {
@@ -58,21 +68,15 @@ public class NewBank {
 	  This is read into the variable request. This is then split into separate
 	  words NEWACCOUNT and Savings and stored as Strings in the array requestWords. */
 
-	// This function is easy to get NULL and loop if input the character not in exact format and looping
 	public synchronized String processRequest(CustomerID customer, String request) {
 		String[] requestWords = request.split(" ");//Input command is split into words and stored in an array.
 		if(customers.containsKey(customer.getKey())) {
-			String userInput = requestWords[0].toUpperCase();//allow user inputs with lower cases, implemented by Chi
+			String userInput = requestWords[0].toUpperCase();//allow user inputs with lower cases.
+			//More detail of the methods in the switch is shown with the methods at the bottom of the page.
 			switch(userInput) {
-				//This is the case for showing account of particular customer
+
 				case "SHOWMYACCOUNTS" : return showMyAccounts(customer);
-				// This is a adding new account implemented by Jane.
-				// Input:account name & Output: Success or Fail
 				case "NEWACCOUNT" : if (requestWords.length==2){return newAccount(customer, requestWords[1]);}else{ return "FAIL";}
-				// This is a "move" implemented by Long Ng
-				// The Move will add amount ($) from either Main/Savings to another account
-				// Input: MOVE 300 Main Savings & Output: SUCCESS or FAIL
-				// Verified by SHOWMYACCOUNTS
 				case "MOVE" : if (requestWords.length==4){return moveAccount(customer, requestWords[1], requestWords[2], requestWords[3]);}else{ return "FAIL";}
 				case "PASSWD" : if (requestWords.length==2){return changePasswd(customer, requestWords[1]);}else{ return "FAIL";}
 				case "TRANSACTIONS": if (requestWords.length==2){return transactions(customer, requestWords[1]);}else{ return "FAIL";}
@@ -81,19 +85,18 @@ public class NewBank {
 				case "PAYMYLOAN": if (requestWords.length==3){return payLoan(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
 				case "WITHDRAW": if (requestWords.length==3){return withdraw(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
 				case "LOGOUT": return "LOGOUT";
-				case "EXIT": return "EXIT";//Exit function implemented by Chi
+				case "EXIT": return "EXIT";
 			default : return "FAIL";
 			}
 		}
 		return "FAIL";
 	}
-
+	/* Method for showing all the accounts held by the customer. */
 	private String showMyAccounts(CustomerID customer) {
 		return (customers.get(customer.getKey())).accountsToString();
 	}
 
 	/*Method to add a new account. Customer types in NEWACCOUNT followed by name of account
-	Example: NEWACCOUNT Savings.
 	The account is created with a zero balance.
 	The customer should use MOVE to put money in the account.
 	Method prevents duplicate Account being created.*/
@@ -104,9 +107,9 @@ public class NewBank {
 		} else {
 			return "FAIL";
 		}
-
 	}
 
+	/* Method to change the customer's password to a new one */
 	private String changePasswd(CustomerID customer, String passwd) {
 		if(customers.get(customer.getKey()).changePassword(customer, passwd)){
 			return "Password changed for " + customer.getKey();
@@ -115,6 +118,7 @@ public class NewBank {
 		}
 	}
 
+	/* Method to move amount from one account to another account of the same customer. */
 	private String moveAccount(CustomerID customer, String amount, String account1, String account2) {
 		Customer currentCustomer = customers.get(customer.getKey());
 		Account origAccount = currentCustomer.findAccount(account1);
@@ -127,6 +131,7 @@ public class NewBank {
 		}
 	}
 
+	/* Method to display all the transactions on a chosen account of the customer. */
 	private String transactions(CustomerID customerId, String accountName) {
 		Customer customer = customers.get(customerId.getKey());
 		Account selectedAccount = customer.findAccount(accountName);
@@ -150,6 +155,7 @@ public class NewBank {
 		return response.toString();
 	}
 
+	/* Method to move amount from Main account of one customer to Main account of another customer. */
 	private String payAccount(CustomerID customerID, String recipient, String amount) {
 		try {
 			Double.parseDouble(amount.trim());
@@ -166,6 +172,7 @@ public class NewBank {
 		}
 	}
 
+	/* Method to set up loan to another customer */
 	private String loan(CustomerID customerID, String recipient, String amount) {
 		Customer loaner = customers.get(customerID.getKey());
 		Customer loanee = customers.get(recipient);
@@ -174,6 +181,8 @@ public class NewBank {
 		}
 		return "FAIL";
 	}
+
+	/* Method to either part pay or pay back in full a loan */
 	private String payLoan(CustomerID customerID, String recipient, String amount) {
 		Customer loanee = customers.get(customerID.getKey());
 		Customer loaner = customers.get(recipient);
@@ -183,6 +192,7 @@ public class NewBank {
 		return "FAIL";
 	}
 
+	/* Method to withdraw cash from a chosen account */
 	private String withdraw(CustomerID customerID, String amount, String accountName) {
 		Customer customer = customers.get(customerID.getKey());
 		Account account = customer.findAccount(accountName);
