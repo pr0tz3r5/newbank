@@ -21,6 +21,11 @@ Moves money from the customer's Main account to another customer's Main account.
 e.g. PAY John 100
 Returns SUCCESS or FAIL
 
+WITHDRAW <Amount> <From>
+Withdraws cash from the customer's account.
+e.g. WITHDRAW 100 Main
+Returns SUCCESS or FAIL
+
 PASSWD <Password>
 Changes the customer's password.
 New password must be at least 8 characters long and contain letters and numbers.
@@ -32,6 +37,13 @@ Returns a list of all the transactions that have occurred on the customer's chos
 e.g. TRANSACTIONS Main
 1.	Move to Savings	-250.0
 2.  Move to Tax -100.0
+
+SHOWMYLOANS
+Returns a list of all the amounts owed to the customer and the anounts owing to other customers.
+e.g.  I owe the following amounts:
+         John £250
+      I am owed the following amounts:
+         Christina £500.
 
 LOAN <Person/Company> <Amount>
 Gives a loan from the customer to another customer.
