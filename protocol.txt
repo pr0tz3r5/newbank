@@ -45,12 +45,12 @@ e.g.  I owe the following amounts:
       I am owed the following amounts:
          Christina £500.
 
-LOAN <Person/Company> <Amount>
+LOAN <Person/Company> <Amount> <InterestRate>
 Gives a loan from the customer to another customer.
 Moves money from the customer's Main account to another customer's Main account.
-Creates a loan account for each customer.
+Creates a loan account for each customer for the amount plus interest.
 (Different types of loan account depending on whether they are the lender or the borrower.)
-e.g. LOAN Christina 100
+e.g. If Bhagy wants to Loan Christina 100 at 5% interest input: LOAN Christina 100 5
 Returns SUCCESS or FAIL
 
 PAYMYLOAN <Person/Company> <Amount>
