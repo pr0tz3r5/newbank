@@ -36,7 +36,7 @@ public class Display {
     }
 
     public String availableCommands(){
-        String s = "" + "\n" + introMessage();
+        String s = "" + "\n" + introMessage() + "\n";
         for(String command : commands) {
             s += command + "\n";
         }
