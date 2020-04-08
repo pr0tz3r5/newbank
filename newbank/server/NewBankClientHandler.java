@@ -27,6 +27,7 @@ public class NewBankClientHandler extends Thread{
 		bank = NewBank.getBank();
 		in = new BufferedReader(new InputStreamReader(s.getInputStream()));
 		out = new PrintWriter(s.getOutputStream(), true);
+
 	}
 
 	public void run() {
@@ -55,7 +56,8 @@ public class NewBankClientHandler extends Thread{
 			} else {
 
 				out.println("Log In Successful. What do you want to do?");
-				printAvailableCommands();
+				Display display = new Display();
+				out.println(display.availableCommands());
 				while(true) {
 					String request = in.readLine();
 					System.out.println("Request from " + customer.getKey());
@@ -72,7 +74,7 @@ public class NewBankClientHandler extends Thread{
 					}
 
 					out.println(response);
-					printAvailableCommands();
+					out.println(display.availableCommands());
 				}
 			}
 		} catch (IOException e) {
@@ -87,14 +89,5 @@ public class NewBankClientHandler extends Thread{
 				Thread.currentThread().interrupt();
 			}
 		}
-	}
-	private void printAvailableCommands(){
-		Display display = new Display();
-		ArrayList<String> commands;
-		commands = display.availableCommands();//Create array of commands available to the customer.
-		out.println();
-		out.println("The commands available to you are:");
-		commands.forEach((x)-> out.println(x));//Print out array of commands
-		out.println("(Customer Names and Account Names are case sensitive. Example: Main)");
 	}
 }

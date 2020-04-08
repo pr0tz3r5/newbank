@@ -26,8 +26,22 @@ public class Display {
         commands.add("LOGOUT");
         commands.add("EXIT");
     }
-    public ArrayList<String> availableCommands(){
-        return commands;
+
+    public String introMessage(){
+        return "The commands available to you are:";
+    }
+
+    public String endMessage(){
+        return "(Customer Names and Account Names are case sensitive. Example: Main)";
+    }
+
+    public String availableCommands(){
+        String s = "" + "\n" + introMessage()+ "\n";
+        for(String command : commands) {
+            s += command + "\n";
+        }
+        s += endMessage() + "\n";
+        return s;
     }
 
 }
