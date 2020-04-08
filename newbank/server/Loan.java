@@ -1,3 +1,16 @@
+/****************************************************************************
+ *             Loan.java   													*
+ * 																			*
+ * This is the class for the object Loan.									*
+ * The constructor is of the form 											*
+ * Loan(Customer sender, Customer receiver, double amount).					*
+ * It is used to store the lender, borrower and amount of each loan. 		*
+ * Each loan is given a unique ID number.									*
+ * The methods are getters for ID, lender, borrower and amount and a        *
+ * setter for amount.														*
+ * The list of loans for each customer is created in the class      		*
+ * Customer.java. 		                                                	*
+ * **************************************************************************/
 package newbank.server;
 
 import java.util.UUID;
