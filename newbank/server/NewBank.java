@@ -77,7 +77,7 @@ public class NewBank {
 				case "PASSWD" : if (requestWords.length==2){return changePasswd(customer, requestWords[1]);}else{ return "FAIL";}
 				case "TRANSACTIONS": if (requestWords.length==2){return transactions(customer, requestWords[1]);}else{ return "FAIL";}
 				case "PAY": if (requestWords.length==3){return payAccount(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
-				case "LOAN": if (requestWords.length==3){return loan(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
+				case "LOAN": if (requestWords.length==4){return loan(customer, requestWords[1], requestWords[2], requestWords[3]);}else{ return "FAIL";}
 				case "PAYMYLOAN": if (requestWords.length==3){return payLoan(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
 				case "WITHDRAW": if (requestWords.length==3){return withdraw(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
 				case "LOGOUT": return "LOGOUT";
@@ -166,10 +166,10 @@ public class NewBank {
 		}
 	}
 
-	private String loan(CustomerID customerID, String recipient, String amount) {
+	private String loan(CustomerID customerID, String recipient, String amount, String interest) {
 		Customer loaner = customers.get(customerID.getKey());
 		Customer loanee = customers.get(recipient);
-		if (loaner.loan(loanee, Double.parseDouble(amount))){
+		if (loaner.loan(loanee, Double.parseDouble(amount), Double.parseDouble(interest))){
 			return "SUCCESS";
 		}
 		return "FAIL";

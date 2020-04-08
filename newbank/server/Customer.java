@@ -118,7 +118,7 @@ public class Customer {
   		return false;
 	}
 	
-	//this method should only be called if loanExits method returns true.
+	//this method should only be called if loanExists method returns true.
 	private Loan findLoan(Customer customer, List<Loan> loanList){
 		for(Loan l : loanList){
 			Customer loaner = l.getLoaner();
@@ -130,8 +130,8 @@ public class Customer {
 		return null;
 	}
 
-	public boolean loan(Customer loanee, double amount) {
-		Loan newLoan = new Loan(this, loanee, amount);
+	public boolean loan(Customer loanee, double amount, double interest) {
+		Loan newLoan = new Loan(this, loanee, amount*(1+interest/100));
 		if (transfer(this, loanee, amount)) {
 			Customer.addLoanTo(this, newLoan, "TO");
 			Customer.addLoanTo(loanee, newLoan, "FROM");
