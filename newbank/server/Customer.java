@@ -111,6 +111,14 @@ public class Customer {
 	public List<Loan> getToLoanList() { return toLoanList; }
 	public List<Loan> getFromLoanList() { return fromLoanList; }
 
+	public String loansToString() {
+		String s = "I owe the following amounts:\n";
+		for(Loan l : this.toLoanList) {
+			s += l.toString()+"\n";
+		}
+		return s;
+	}
+
 	private boolean loanExists(Customer customer){
 		if(findLoan(customer, this.fromLoanList) != null) {
 			return true;
@@ -131,7 +139,7 @@ public class Customer {
 	}
 
 	public boolean loan(Customer loanee, double amount, double interest) {
-		Loan newLoan = new Loan(this, loanee, amount*(1+interest/100));
+		Loan newLoan = new Loan(this, loanee, amount, interest);
 		if (transfer(this, loanee, amount)) {
 			Customer.addLoanTo(this, newLoan, "TO");
 			Customer.addLoanTo(loanee, newLoan, "FROM");
@@ -144,8 +152,8 @@ public class Customer {
 	private void updateLoan(Loan loan, double amount, List<Loan> loanList){
 		int i = loanList.indexOf(loan);
 		loanList.remove(i);
-		double loanAmount = loan.getLoanAmount();
-		loan.updateLoanAmount(loanAmount - amount);
+		double repayable = loan.getRepayable();
+		loan.updateRepayable(repayable - amount);
 		loanList.add(loan);
 	}
 
@@ -153,7 +161,7 @@ public class Customer {
 		if(loanExists(loaner)){
 			Loan loanToBePaid = findLoan(loaner, this.fromLoanList);
 			Loan loanersLoan = findLoan(loaner, loaner.toLoanList);
-			double loanAmount = loanToBePaid.getLoanAmount();
+			double loanAmount = loanToBePaid.getRepayable();
 			if(loanAmount >= amount) {//only allow to pay amount which is less or equal to loanAmount.
 				if (transfer(this,loaner,amount)) {
 					updateLoan(loanToBePaid, amount, this.fromLoanList);

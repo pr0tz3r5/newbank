@@ -81,6 +81,7 @@ public class NewBank {
 				case "PASSWD" : if (requestWords.length==2){return changePasswd(customer, requestWords[1]);}else{ return "FAIL";}
 				case "TRANSACTIONS": if (requestWords.length==2){return transactions(customer, requestWords[1]);}else{ return "FAIL";}
 				case "PAY": if (requestWords.length==3){return payAccount(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
+				case "SHOWMYLOANS" : return showMyLoans(customer);
 				case "LOAN": if (requestWords.length==4){return loan(customer, requestWords[1], requestWords[2], requestWords[3]);}else{ return "FAIL";}
 				case "PAYMYLOAN": if (requestWords.length==3){return payLoan(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
 				case "WITHDRAW": if (requestWords.length==3){return withdraw(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
@@ -172,6 +173,10 @@ public class NewBank {
 		}
 	}
 
+	/* Method for showing all the loans held by the customer. */
+	private String showMyLoans(CustomerID customer) {
+		return (customers.get(customer.getKey())).loansToString();
+	}
 
 	/* Method to set up loan to another customer */
 	private String loan(CustomerID customerID, String recipient, String amount, String interest) {
