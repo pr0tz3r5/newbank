@@ -31,7 +31,7 @@ public class Loan {
 		this.loanee = receiver;
 		this.loanAmount = amount;
 		this.interest = interest;
-		this.repayable = amount*(1+interest/100);
+		repayable = amount*(1+interest/100);
 	}
 
 	public String getId() {
@@ -58,6 +58,6 @@ public class Loan {
 		return repayable;
 	}
 
-	public void updateRepayable(double amount){ this.repayable = amount; }
+	public void updateRepayable(double amount){ repayable = amount; }
 
 }

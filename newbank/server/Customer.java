@@ -192,11 +192,11 @@ public class Customer {
 		if(loanExists(loaner)){
 			Loan loanToBePaid = findLoan(loaner, this.fromLoanList);
 			Loan loanersLoan = findLoan(loaner, loaner.toLoanList);
-			double loanAmount = loanToBePaid.getRepayable();
-			if(loanAmount >= amount) {//only allow to pay amount which is less or equal to loanAmount.
+			double outstanding = loanToBePaid.getRepayable();
+			if(outstanding >= amount) {//only allow to pay amount which is less or equal to amount owing.
 				if (transfer(this,loaner,amount)) {
-					updateLoan(loanToBePaid, amount, this.fromLoanList);
-					updateLoan(loanersLoan, amount, loaner.toLoanList);
+					updateLoan(loanToBePaid, 0.5*amount, this.fromLoanList);
+					updateLoan(loanersLoan, 0.5*amount, loaner.toLoanList);
 					return true;
 
 				} else {
