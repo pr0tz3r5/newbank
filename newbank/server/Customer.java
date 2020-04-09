@@ -13,6 +13,7 @@
 package newbank.server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Customer {
@@ -20,18 +21,54 @@ public class Customer {
 	private ArrayList<Account> accounts;
 	private List<Loan> toLoanList;
 	private List<Loan> fromLoanList;
+	private String customerName;
 	private String passwd;
 
-	public Customer() {
+	public Customer(String customerName) {
+		this.customerName = customerName;
 		this.accounts = new ArrayList<>();
 		this.toLoanList = new ArrayList<>();
 		this.fromLoanList = new ArrayList<>();
 	}
 
+	public String getcustomerName() { return customerName; }
+
 	public String accountsToString() {
 		String s = "";
 		for(Account a : this.accounts) {
 			s += a.toString()+"\n";
+		}
+		return s;
+	}
+
+	/* Method for showing all the loans held by the customer. */
+	public String loansToString(){
+		String s ="";
+		if (toLoanList.size()!=0) {
+			s += "I am owed the following amounts:\n";
+			s += "\tName      \tLoan      \tInterest\tOutstanding\n";
+			s += "\t\t\t\t\t\t\t Rate %  \t\n";
+			s += "\t----------\t----------\t--------\t-----------\n";
+			for (Loan l : toLoanList) {
+				s += "\t" + String.format("%-10s",l.getLoanee().getcustomerName());
+				s += "\t" + String.format("%10.2f",l.getLoanAmount());
+				s += "\t" + String.format("%8.2f",l.getInterest());
+				s += "\t" + String.format("%11.2f",l.getRepayable()) + "\n";
+			}
+			s += "\n";
+		}
+		if (fromLoanList.size()!=0) {
+			s += "I owe the following amounts:\n";
+			s += "\tName      \tLoan      \tInterest\tOutstanding\n";
+			s += "\t\t\t\t\t\t\t Rate %  \t\n";
+			s += "\t----------\t----------\t--------\t-----------\n";
+			for (Loan l : fromLoanList) {
+				s += "\t" + String.format("%-10s",l.getLoaner().getcustomerName());
+				s += "\t" + String.format("%10.2f",l.getLoanAmount());
+				s += "\t" + String.format("%8.2f",l.getInterest());
+				s += "\t" + String.format("%11.2f",l.getRepayable()) + "\n";
+			}
+			s += "\n";
 		}
 		return s;
 	}
@@ -111,13 +148,7 @@ public class Customer {
 	public List<Loan> getToLoanList() { return toLoanList; }
 	public List<Loan> getFromLoanList() { return fromLoanList; }
 
-	public String loansToString() {
-		String s = "I owe the following amounts:\n";
-		for(Loan l : this.toLoanList) {
-			s += l.toString()+"\n";
-		}
-		return s;
-	}
+
 
 	private boolean loanExists(Customer customer){
 		if(findLoan(customer, this.fromLoanList) != null) {

@@ -57,7 +57,7 @@ public class NewBankClientHandler extends Thread{
 
 				out.println("Log In Successful. What do you want to do?");
 				Display display = new Display();
-				out.println(display.availableCommands());
+				//out.println(display.availableCommands());
 				while(true) {
 					String request = in.readLine();
 					System.out.println("Request from " + customer.getKey());
@@ -74,7 +74,7 @@ public class NewBankClientHandler extends Thread{
 					}
 
 					out.println(response);
-					out.println(display.availableCommands());
+					//out.println(display.availableCommands());
 				}
 			}
 		} catch (IOException e) {
