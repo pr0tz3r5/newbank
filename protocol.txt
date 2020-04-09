@@ -39,11 +39,19 @@ e.g. TRANSACTIONS Main
 2.  Move to Tax -100.0
 
 SHOWMYLOANS
-Returns a list of all the amounts owed to the customer and the anounts owing to other customers.
-e.g.  I owe the following amounts:
-         John £250
-      I am owed the following amounts:
-         Christina £500.
+Returns a list of all the amounts owed to the customer and the amounts owing to other customers.
+e.g.  I am owed the following amounts:
+      	Name      	Loan      	Interest	Outstanding
+      							 Rate %
+      	----------	----------	--------	-----------
+      	Christina 	    500.00	   10.00	     550.00
+      	John      	    100.00	    5.00	     105.00
+
+      I owe the following amounts:
+      	Name      	Loan      	Interest	Outstanding
+      							 Rate %
+      	----------	----------	--------	-----------
+      	John      	     60.00	    2.00	      61.20
 
 LOAN <Person/Company> <Amount> <InterestRate>
 Gives a loan from the customer to another customer.
