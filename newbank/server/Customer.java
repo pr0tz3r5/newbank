@@ -31,7 +31,7 @@ public class Customer {
 	public String accountsToString() {
 		String s = "";
 		for(Account a : this.accounts) {
-			s += a.toString()+"\n";
+			s += String.format("%-12s", a.getName())+"\t" + String.format("%12.2f",a.getBalance()) + "\n";
 		}
 		return s;
 	}
