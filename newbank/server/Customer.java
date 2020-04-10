@@ -120,20 +120,20 @@ public class Customer {
 		return accounts;
 	}
 
-	public boolean move(double amount, Account origAccount, Account destAccount) {
+	public boolean move(double amount, Account origAccount, Account destAccount, String descriptionTo, String descriptionFrom) {
 		try {
-			origAccount.debit(amount, "Move to " + destAccount.getName());
-			destAccount.credit(amount, "Move from " + origAccount.getName());
+			origAccount.debit(amount, descriptionTo);
+			destAccount.credit(amount, descriptionFrom);
 			return true;
 		} catch (InsufficientBalanceException e) {
 			return false;
 		}
 	}
 
-	public boolean transfer(Customer sender, Customer receiver, Double amount) {
+	public boolean transfer(Customer sender, Customer receiver, Double amount, String descriptionTo, String descriptionFrom) {
 		Account origAccount = sender.findAccount("Main");
 		Account destAccount = receiver.findAccount("Main");
-		return move(amount, origAccount, destAccount);
+		return move(amount, origAccount, destAccount, descriptionTo, descriptionFrom);
 	}
 
 	public Account findAccount(String accountName) {
@@ -171,7 +171,9 @@ public class Customer {
 
 	public boolean loan(Customer loanee, double amount, double interest) {
 		Loan newLoan = new Loan(this, loanee, amount, interest);
-		if (transfer(this, loanee, amount)) {
+		String descriptionTo = "Gave loan to " + loanee.getcustomerName();
+		String descriptionFrom = "Received loan from " + this.getcustomerName();
+		if (transfer(this, loanee, amount, descriptionTo, descriptionFrom)) {
 			Customer.addLoanTo(this, newLoan, "TO");
 			Customer.addLoanTo(loanee, newLoan, "FROM");
 			return true;
@@ -193,8 +195,10 @@ public class Customer {
 			Loan loanToBePaid = findLoan(loaner, this.fromLoanList);
 			Loan loanersLoan = findLoan(loaner, loaner.toLoanList);
 			double outstanding = loanToBePaid.getRepayable();
+			String descriptionTo = "Paid back loan to " + loaner.getcustomerName();
+			String descriptionFrom = "Received payback on loan from " + this.getcustomerName();
 			if(outstanding >= amount) {//only allow to pay amount which is less or equal to amount owing.
-				if (transfer(this,loaner,amount)) {
+				if (transfer(this,loaner,amount, descriptionTo, descriptionFrom)) {
 					updateLoan(loanToBePaid, 0.5*amount, this.fromLoanList);
 					updateLoan(loanersLoan, 0.5*amount, loaner.toLoanList);
 					return true;
