@@ -13,6 +13,7 @@
 package newbank.server;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Customer {
@@ -20,18 +21,54 @@ public class Customer {
 	private ArrayList<Account> accounts;
 	private List<Loan> toLoanList;
 	private List<Loan> fromLoanList;
+	private String customerName;
 	private String passwd;
 
-	public Customer() {
+	public Customer(String customerName) {
+		this.customerName = customerName;
 		this.accounts = new ArrayList<>();
 		this.toLoanList = new ArrayList<>();
 		this.fromLoanList = new ArrayList<>();
 	}
 
+	public String getcustomerName() { return customerName; }
+
 	public String accountsToString() {
 		String s = "";
 		for(Account a : this.accounts) {
 			s += a.toString()+"\n";
+		}
+		return s;
+	}
+
+	/* Method for showing all the loans held by the customer. */
+	public String loansToString(){
+		String s ="";
+		if (toLoanList.size()!=0) {
+			s += "I am owed the following amounts:\n";
+			s += "\tName      \tLoan      \tInterest\tOutstanding\n";
+			s += "\t\t\t\t\t\t\t Rate %  \t\n";
+			s += "\t----------\t----------\t--------\t-----------\n";
+			for (Loan l : toLoanList) {
+				s += "\t" + String.format("%-10s",l.getLoanee().getcustomerName());
+				s += "\t" + String.format("%10.2f",l.getLoanAmount());
+				s += "\t" + String.format("%8.2f",l.getInterest());
+				s += "\t" + String.format("%11.2f",l.getRepayable()) + "\n";
+			}
+			s += "\n";
+		}
+		if (fromLoanList.size()!=0) {
+			s += "I owe the following amounts:\n";
+			s += "\tName      \tLoan      \tInterest\tOutstanding\n";
+			s += "\t\t\t\t\t\t\t Rate %  \t\n";
+			s += "\t----------\t----------\t--------\t-----------\n";
+			for (Loan l : fromLoanList) {
+				s += "\t" + String.format("%-10s",l.getLoaner().getcustomerName());
+				s += "\t" + String.format("%10.2f",l.getLoanAmount());
+				s += "\t" + String.format("%8.2f",l.getInterest());
+				s += "\t" + String.format("%11.2f",l.getRepayable()) + "\n";
+			}
+			s += "\n";
 		}
 		return s;
 	}
@@ -111,6 +148,8 @@ public class Customer {
 	public List<Loan> getToLoanList() { return toLoanList; }
 	public List<Loan> getFromLoanList() { return fromLoanList; }
 
+
+
 	private boolean loanExists(Customer customer){
 		if(findLoan(customer, this.fromLoanList) != null) {
 			return true;
@@ -118,7 +157,7 @@ public class Customer {
   		return false;
 	}
 	
-	//this method should only be called if loanExits method returns true.
+	//this method should only be called if loanExists method returns true.
 	private Loan findLoan(Customer customer, List<Loan> loanList){
 		for(Loan l : loanList){
 			Customer loaner = l.getLoaner();
@@ -130,8 +169,8 @@ public class Customer {
 		return null;
 	}
 
-	public boolean loan(Customer loanee, double amount) {
-		Loan newLoan = new Loan(this, loanee, amount);
+	public boolean loan(Customer loanee, double amount, double interest) {
+		Loan newLoan = new Loan(this, loanee, amount, interest);
 		if (transfer(this, loanee, amount)) {
 			Customer.addLoanTo(this, newLoan, "TO");
 			Customer.addLoanTo(loanee, newLoan, "FROM");
@@ -144,8 +183,8 @@ public class Customer {
 	private void updateLoan(Loan loan, double amount, List<Loan> loanList){
 		int i = loanList.indexOf(loan);
 		loanList.remove(i);
-		double loanAmount = loan.getLoanAmount();
-		loan.updateLoanAmount(loanAmount - amount);
+		double repayable = loan.getRepayable();
+		loan.updateRepayable(repayable - amount);
 		loanList.add(loan);
 	}
 
@@ -153,11 +192,11 @@ public class Customer {
 		if(loanExists(loaner)){
 			Loan loanToBePaid = findLoan(loaner, this.fromLoanList);
 			Loan loanersLoan = findLoan(loaner, loaner.toLoanList);
-			double loanAmount = loanToBePaid.getLoanAmount();
-			if(loanAmount >= amount) {//only allow to pay amount which is less or equal to loanAmount.
+			double outstanding = loanToBePaid.getRepayable();
+			if(outstanding >= amount) {//only allow to pay amount which is less or equal to amount owing.
 				if (transfer(this,loaner,amount)) {
-					updateLoan(loanToBePaid, amount, this.fromLoanList);
-					updateLoan(loanersLoan, amount, loaner.toLoanList);
+					updateLoan(loanToBePaid, 0.5*amount, this.fromLoanList);
+					updateLoan(loanersLoan, 0.5*amount, loaner.toLoanList);
 					return true;
 
 				} else {

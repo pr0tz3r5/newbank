@@ -17,17 +17,21 @@ import java.util.UUID;
 
 public class Loan {
 	private double loanAmount;
+	private double interest;
+	private double repayable;
 	private Customer loaner;
 	private Customer loanee;
 	private String id;
 	private UUID uuid;
 
-	public Loan(Customer sender, Customer receiver, double amount) {
+	public Loan(Customer sender, Customer receiver, double amount, double interest) {
 		this.uuid = UUID.randomUUID();
 		this.id = uuid.toString();
 		this.loaner = sender;
 		this.loanee = receiver;
 		this.loanAmount = amount;
+		this.interest = interest;
+		repayable = amount*(1+interest/100);
 	}
 
 	public String getId() {
@@ -45,4 +49,15 @@ public class Loan {
 	}
 
 	public void updateLoanAmount(double amount){ this.loanAmount = amount; }
+
+	public double getInterest(){
+		return interest;
+	}
+
+	public double getRepayable(){
+		return repayable;
+	}
+
+	public void updateRepayable(double amount){ repayable = amount; }
+
 }

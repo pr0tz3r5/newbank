@@ -11,6 +11,7 @@
 package newbank.server;
 
 import java.util.HashMap;
+import java.util.List;
 
 import static newbank.server.Customer.*;
 
@@ -26,12 +27,12 @@ public class NewBank {
 
 	//Test comment
 	private void addTestData() {
-		Customer bhagy = new Customer();
+		Customer bhagy = new Customer("Bhagy");
 		bhagy.setPassword("Test1");
 		bhagy.addAccount(new Account("Main", 1000.0));
 		customers.put("Bhagy", bhagy);
 
-		Customer christina = new Customer();
+		Customer christina = new Customer("Christina");
 		christina.setPassword("Test2");
 		christina.addAccount(new Account("Savings", 1500.0));
 		christina.addAccount(new Account("Main", 5000.0));
@@ -40,7 +41,7 @@ public class NewBank {
 		christina.move(100, mainAccount, savingAccount);
 		customers.put("Christina", christina);
 
-		Customer john = new Customer();
+		Customer john = new Customer("John");
 		john.setPassword("Test3");
 		john.addAccount(new Account("Main", 250.0));
 		customers.put("John", john);
@@ -81,7 +82,8 @@ public class NewBank {
 				case "PASSWD" : if (requestWords.length==2){return changePasswd(customer, requestWords[1]);}else{ return "FAIL";}
 				case "TRANSACTIONS": if (requestWords.length==2){return transactions(customer, requestWords[1]);}else{ return "FAIL";}
 				case "PAY": if (requestWords.length==3){return payAccount(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
-				case "LOAN": if (requestWords.length==3){return loan(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
+				case "SHOWMYLOANS" : return showMyLoans(customer);
+				case "LOAN": if (requestWords.length==4){return loan(customer, requestWords[1], requestWords[2], requestWords[3]);}else{ return "FAIL";}
 				case "PAYMYLOAN": if (requestWords.length==3){return payLoan(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
 				case "WITHDRAW": if (requestWords.length==3){return withdraw(customer, requestWords[1], requestWords[2]);}else{ return "FAIL";}
 				case "LOGOUT": return "LOGOUT";
@@ -92,9 +94,7 @@ public class NewBank {
 		return "FAIL";
 	}
 	/* Method for showing all the accounts held by the customer. */
-	private String showMyAccounts(CustomerID customer) {
-		return (customers.get(customer.getKey())).accountsToString();
-	}
+	private String showMyAccounts(CustomerID customer) { return (customers.get(customer.getKey())).accountsToString(); }
 
 	/*Method to add a new account. Customer types in NEWACCOUNT followed by name of account
 	The account is created with a zero balance.
@@ -172,11 +172,16 @@ public class NewBank {
 		}
 	}
 
+	/* Method for showing all the loans held by the customer. */
+	private String showMyLoans(CustomerID customerID) {
+		{ return (customers.get(customerID.getKey())).loansToString(); }
+	}
+
 	/* Method to set up loan to another customer */
-	private String loan(CustomerID customerID, String recipient, String amount) {
+	private String loan(CustomerID customerID, String recipient, String amount, String interest) {
 		Customer loaner = customers.get(customerID.getKey());
 		Customer loanee = customers.get(recipient);
-		if (loaner.loan(loanee, Double.parseDouble(amount))){
+		if (loaner.loan(loanee, Double.parseDouble(amount), Double.parseDouble(interest))){
 			return "SUCCESS";
 		}
 		return "FAIL";
@@ -207,5 +212,9 @@ public class NewBank {
 		} catch (Exception e) {
 			return "FAIL";
 		}
+	}
+
+	public HashMap<String,Customer> getCustomers(){
+		return customers;
 	}
 }

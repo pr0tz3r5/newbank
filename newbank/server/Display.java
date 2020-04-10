@@ -21,7 +21,7 @@ public class Display {
         commands.add("PASSWD <newPassword>");
         commands.add("TRANSACTIONS <Account>");
         commands.add("SHOWMYLOANS");
-        commands.add("LOAN <Person/Company> <Amount>");
+        commands.add("LOAN <Person/Company> <Amount> <Interest%>");
         commands.add("PAYMYLOAN <Person/Company> <Amount>");
         commands.add("LOGOUT");
         commands.add("EXIT");
@@ -36,7 +36,7 @@ public class Display {
     }
 
     public String availableCommands(){
-        String s = "" + "\n" + introMessage()+ "\n";
+        String s = "" + "\n" + introMessage() + "\n";
         for(String command : commands) {
             s += command + "\n";
         }
