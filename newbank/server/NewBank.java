@@ -202,10 +202,14 @@ public class NewBank {
 		Customer customer = customers.get(customerID.getKey());
 		Account account = customer.findAccount(accountName);
 		if (account == null) {
-			return "FAIL";
+			return "FAIL, no such account";
 		}
 		try {
 			double withdrawal = Double.parseDouble(amount);
+			double dailylimit = 5000;
+			if (withdrawal >=dailylimit) {
+				return "over daily limit $5,000";
+			}
 			account.debit(withdrawal, "Cash withdrawal");
 			// Dispense cash here
 			return "SUCCESS";
