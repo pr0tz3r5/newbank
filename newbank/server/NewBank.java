@@ -36,9 +36,6 @@ public class NewBank {
 		christina.setPassword("Test2");
 		christina.addAccount(new Account("Savings", 1500.0));
 		christina.addAccount(new Account("Main", 5000.0));
-		Account mainAccount = christina.getAccounts().get(1);
-		Account savingAccount = christina.getAccounts().get(0);
-		christina.move(100, mainAccount, savingAccount);
 		customers.put("Christina", christina);
 
 		Customer john = new Customer("John");
@@ -124,7 +121,9 @@ public class NewBank {
 		Account origAccount = currentCustomer.findAccount(account1);
 		Account destAccount = currentCustomer.findAccount(account2);
 		Double amountDouble = Double.parseDouble(amount);
-		if(origAccount != null && destAccount != null && currentCustomer.move(amountDouble, origAccount, destAccount)) {
+		String descriptionTo = "Move to " + destAccount.getName();
+		String descriptionFrom = "Move from " + origAccount.getName();
+		if(origAccount != null && destAccount != null && currentCustomer.move(amountDouble, origAccount, destAccount, descriptionTo, descriptionFrom)) {
 			return "SUCCESS";
 		} else {
 			return "FAIL";
@@ -146,9 +145,9 @@ public class NewBank {
 		for (Transaction transaction : selectedAccount.getTransactionList()) {
 			response.append(transactionIndex);
 			response.append(".\t");
-			response.append(transaction.getDescription());
+			response.append(String.format("%-40s", transaction.getDescription()));
 			response.append("\t");
-			response.append(transaction.getAmount());
+			response.append(String.format("%10.2f", transaction.getAmount()));
 			response.append("\n");
 			transactionIndex++;
 		}
@@ -164,8 +163,9 @@ public class NewBank {
 		}
 		Customer sender = customers.get(customerID.getKey());
 		Customer receiver = customers.get(recipient);
-
-		if (sender.transfer(sender, receiver, Double.parseDouble(amount))) {
+		String descriptionTo = "Paid to " + receiver.getcustomerName();
+		String descriptionFrom = "Received from " + sender.getcustomerName();
+		if (sender.transfer(sender, receiver, Double.parseDouble(amount), descriptionTo, descriptionFrom)) {
 			return "SUCCESS";
 		} else {
 			return "FAIL";
