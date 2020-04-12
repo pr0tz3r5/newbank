@@ -13,6 +13,8 @@
  * **************************************************************************/
 package newbank.server;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.UUID;
 
 public class Loan {
@@ -31,7 +33,7 @@ public class Loan {
 		this.loanee = receiver;
 		this.loanAmount = amount;
 		this.interest = interest;
-		repayable = amount*(1+interest/100);
+		repayable = round(amount*(1+interest/100),2);
 	}
 
 	public String getId() {
@@ -59,5 +61,13 @@ public class Loan {
 	}
 
 	public void updateRepayable(double amount){ repayable = amount; }
+
+	private static double round(double value, int places) {
+		if (places < 0) throw new IllegalArgumentException();
+
+		BigDecimal bd = new BigDecimal(Double.toString(value));
+		bd = bd.setScale(places, RoundingMode.HALF_UP);
+		return bd.doubleValue();
+	}
 
 }
