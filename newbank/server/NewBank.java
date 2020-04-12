@@ -19,7 +19,7 @@ public class NewBank {
 
 	private static final NewBank bank = new NewBank();
 	private HashMap<String,Customer> customers;
-
+	private final static int DAILY_LIMIT = 5000;
 	private NewBank() {
 		customers = new HashMap<>();
 		addTestData();
@@ -206,8 +206,7 @@ public class NewBank {
 		}
 		try {
 			double withdrawal = Double.parseDouble(amount);
-			double dailylimit = 5000;
-			if (withdrawal >=dailylimit) {
+			if (withdrawal >=DAILY_LIMIT) {
 				return "over daily limit $5,000";
 			}
 			account.debit(withdrawal, "Cash withdrawal");
