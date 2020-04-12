@@ -207,7 +207,7 @@ public class NewBank {
 		try {
 			double withdrawal = Double.parseDouble(amount);
 			if (withdrawal >=DAILY_LIMIT) {
-				return "over daily limit $5,000";
+				return "Over daily limit $5,000";
 			}
 			account.debit(withdrawal, "Cash withdrawal");
 			// Dispense cash here
